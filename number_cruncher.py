@@ -5,40 +5,48 @@ def process_numbers():
     maximum = None
 
     try:
-        with open("numbers.txt", "r") as infile:
+        with open("numbers.txt", "r") as infile, open("error_log.txt", "w") as error_log:
+
+            line_number = 1
+
             for line in infile:
+                try:
+                    # Convert each line from a string to a floating number
+                    number = float(line.strip())
 
-                # Convert each line from a string to a floating number
-                number = float(line.strip())
+                    # Calculate Sum
+                    total += number
 
-                # Calculate Sum
-                total += number
+                    # Calculate Count
+                    count += 1
 
-                # Calculate Count
-                count += 1
+                    # Calculate Average
+                    if count > 0:
+                        average = total / count
+                    else:
+                        average = 0
+                    
+                    # Calculate Minimum
+                    if minimum is None or number < minimum:
+                        minimum = number
 
-                # Calculate Average
-                if count > 0:
-                    average = total / count
-                else:
-                    average = 0
-                
-                # Calculate Minimum
-                if minimum is None or number < minimum:
-                    minimum = number
+                    # Calculate Maximum
+                    if maximum is None or number > maximum:
+                        maximum = number
 
-                # Calculate Maximum
-                if maximum is None or number > maximum:
-                    maximum = number
+                except ValueError:
+                    error_log.write(f"Line {line_number} contains a non-numeric value: '{line.strip()}'\n")
 
-        with open("report.txt", "w") as outfile:
-            outfile.write("Report:\n")
-            outfile.write("---------\n")
-            outfile.write(f"Sum: {total}\n")
-            outfile.write(f"Count: {count}\n")
-            outfile.write(f"Average: {average}\n")
-            outfile.write(f"Minimum: {minimum}\n")
-            outfile.write(f"Maximum: {maximum}\n")
+                line_number += 1
+
+        with open("report.txt", "w") as report:
+            report.write("Report:\n")
+            report.write("---------\n")
+            report.write(f"Sum: {total}\n")
+            report.write(f"Count: {count}\n")
+            report.write(f"Average: {average}\n")
+            report.write(f"Minimum: {minimum}\n")
+            report.write(f"Maximum: {maximum}\n")
             
     except FileNotFoundError:
         print("Error: 'numbers.txt' not found. Please create the file with numbers.")
