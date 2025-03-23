@@ -54,8 +54,7 @@ def process_numbers():
                 
         except FileNotFoundError:
             print(f"Error: '{file_name}' not found.")
-        except ValueError as e:
-            print("Error: Found a non-numeric value. Please ensure all lines contain valid numbers.")
+            
         finally:
             if count > 0:
                 print("File processing complete.\n")
