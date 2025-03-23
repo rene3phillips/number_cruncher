@@ -1,3 +1,0 @@
-Line 3 contains a non-numeric value: 'ABC'
-Line 6 contains a non-numeric value: 'DEF'
-Line 9 contains a non-numeric value: 'GHI'
